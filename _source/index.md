@@ -4,7 +4,6 @@ description: Grease takes the friction out of building fast, adaptable, aestheti
 layout: base.html
 # noindex: true
 # canonical: https://example.com/page.html
-permalink: false
 ---
 
 {% comment %}
