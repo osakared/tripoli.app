@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build:eleventy:prod": "ELEVENTY_ENV=production eleventy",
-    "build:prod": "npm run build:eleventy:prod",
+    "add-domain": "echo \"tripoli.app\" > _public/CNAME",
+    "build:prod": "npm run build:eleventy:prod && npm run add-domain",
     "start": "eleventy --serve --incremental --quiet",
     "publish:stage": "ELEVENTY_ENV=stage eleventy",
     "publish:prod": "ELEVENTY_ENV=prod eleventy",
