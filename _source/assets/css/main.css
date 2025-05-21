@@ -7,3 +7,67 @@ main CSS bundle
 @import "_base/_base.css" layer(base);
 @import "_components/_components.css" layer(components);
 @import "_utilities/_utilities.css" layer(utilities);
+
+/* @import "../assets/css/_base/@media.css"; */
+
+@layer components {
+	.hero {
+		position: relative;
+		margin-block: var(--space-xxl);
+		font-size: clamp(3.6em, 8vw, 7em);
+		line-height: 1;
+		font-weight: var(--font-weight-xs);
+		color: var(--color-accent);
+		z-index: var(--z-2);
+	}
+}
+
+.grease-marks {
+    inline-size: 100%;
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: -80rem;
+    z-index: -1;
+    opacity: 1;
+    rotate: -8deg;
+    display: none;
+
+    .js & {
+        display: block;
+    }
+
+    & > * {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        inline-size: 300rem;
+        block-size: 300rem;
+        border-width: 0;
+        border-block-start-width: 10rem;
+        border-style: solid;
+        border-color: light-dark(
+            oklch(from var(--color-accent) var(--100)),
+            oklch(from var(--color-accent) var(--700) / 15%)
+        );
+        border-radius: 100%;
+        mix-blend-mode: soft-light;
+
+        .high-contrast & {
+            display: none;
+        }
+    }
+}
+
+.screen-parallax {
+    /* The image used */
+    background-image: url("../images/tripoli.png");
+
+    /* Set a specific height */
+    min-height: 500px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

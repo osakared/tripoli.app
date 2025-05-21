@@ -7,6 +7,7 @@ import setVar from './_source/_utilities/setVar.js';
 import fullDate from './_source/_utilities/fullDate.js';
 import markdownify from './_source/_utilities/markdownify.js';
 import { IdAttributePlugin } from '@11ty/eleventy';
+import sharp from 'sharp';
 
 export default async function (eleventyConfig) {
   /* --------------------------------------------------------------------------
@@ -17,6 +18,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(IdAttributePlugin);
   eleventyConfig.addBundle('css', { transforms: [style] });
   eleventyConfig.addShortcode('image', image);
+  eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
   eleventyConfig.addPairedShortcode('setVar', setVar);
   eleventyConfig.addFilter('fullDate', fullDate);
   eleventyConfig.addFilter('markdownify', markdownify);
@@ -37,6 +39,21 @@ export default async function (eleventyConfig) {
   eleventyConfig.setServerPassthroughCopyBehavior('passthrough');
   eleventyConfig.addPassthroughCopy('_source/assets/fonts');
   eleventyConfig.addPassthroughCopy('_source/assets/images');
+
+  // Generate favicon from svg input
+  eleventyConfig.on('eleventy.before', async () => {
+    [196, 32].forEach((dim) => {
+      sharp('_source/assets/images/icons/favicon.svg')
+        .png()
+        .resize(dim, dim)
+        .toFile(`_source/assets/images/icons/favicon-${dim}x${dim}.png`)
+        .catch(function (err) {
+          console.log('[11ty] ERROR Generating favicon')
+          console.log(err)
+        })
+      eleventyConfig.watchIgnores.add(`public/img/icon-${dim}x${dim}.png`)
+    })
+  })
 
   return {
     dir: {
